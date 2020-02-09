@@ -1,19 +1,36 @@
 # clip
 An extremely simple to use, yet fully fledged, C++ Command Line Parser library (compiled and single-header-only).
 
-## Header-Only
-Copy the 
+## Usage
 
-## Compile
+#### Header-Only
+Copy the single header file [clip.hpp](https://github.com/StefanoLusardi/clip/blob/master/single_header/CommandLineInputParser/clip.hpp) within your project and just use it.
+Requires a C++17 compiler.
+
+#### Compile
+Building the library is the preferrable approach since it leads to faster compile and link times.
 Requires CMake (> 3.8) and a C++17 compiler.
 
 ```console
-$ git clone https://github.com/stefanolusardi/clp.git
-$ cd clp && mkdir build && cd build
+$ git clone https://github.com/stefanolusardi/clip.git
+$ cd clip && mkdir build && cd build
 $ cmake --build . --config Release
+$ cmake --build . --config Debug
 $ cmake --install . --prefix <ANYWHERE_YOU_LIKE>
 ```
 
-## OSes
-Windows 10 - MSVC 16
-Ubuntu 18.04 - GCC 9
+## Platforms & Compilers
+* Windows 10 - MSVC 16
+* Ubuntu 18.04 - GCC 9
+
+## Examples
+Examples are located within the [examples](https://github.com/StefanoLusardi/clip/tree/master/examples) folder.
+It is possible to build all the examples using:
+```console
+$ git clone https://github.com/stefanolusardi/clip.git
+$ cd clip && mkdir build && cd build
+$ cmake --build . --config Release -DBUILD_EXAMPLES=ON
+```
+
+## Tests
+[Coming soon]

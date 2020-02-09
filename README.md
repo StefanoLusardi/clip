@@ -1,4 +1,4 @@
-# CLP
+# clip
 An extremely simple to use, yet fully fledged, C++ Command Line Parser library (compiled and single-header-only).
 
 ## Header-Only

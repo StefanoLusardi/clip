@@ -6,6 +6,39 @@
 An extremely simple to use, yet fully fledged, C++ Command Line Parser library (compiled and single-header-only).
 
 ## Usage
+```cpp
+	// Create clip::CommandLineParser object
+	clip::CommandLineParser clp;
+
+	// Create and add clip::PositionalArgument
+	clip::PositionalArgument posArg("positional_arg");
+	clp.addPositionalArgument(posArg);
+
+	// Create and add clip::OptionalArgument
+	clip::OptionalArgument optArg({ "a", "a-opt", "a-opt-arg" }, "Opt Arg Description");
+	clp.addOptionalArgument(optArg);
+
+	// Create and add clip::OptionalArgument with:
+	// expected type (e.g. std::string), default value (e.g. "initial_value") and other options (e.g. isRequired)
+	clip::OptionalArgument optArgValue({ "c" }, "Description", clip::value<std::string>("initial_value").isRequired(true));
+	clp.addOptionalArgument(optArgValue);
+
+	// Invoke parse method
+	clp.parse(argc, argv);
+
+	if (clp.isSet(posArg))
+	{
+		std::cout << "positional_arg is set." << std::endl;
+	}
+
+	if (clp.isSet(optArgValue))
+	{
+		auto v = clp.getOptionValue(optArgValue);
+		std::cout << "Value: " << v << std::endl;
+	}
+```
+
+## Integration
 
 ### Header-Only
 Copy the single header file [clip.hpp](https://github.com/StefanoLusardi/clip/blob/master/single_header/CommandLineInputParser/clip.hpp) within your project and just use it.
@@ -24,8 +57,8 @@ $ cmake --install . --prefix <ANYWHERE_YOU_LIKE>
 ```
 
 ## Platforms & Compilers
-  * Windows 10 - MSVC 16
-  * Ubuntu 18.04 - GCC 9
+*   Windows 10 - MSVC 16
+*   Ubuntu 18.04 - GCC 9
 
 ## Examples
 Examples are located within the [examples](https://github.com/StefanoLusardi/clip/tree/master/examples) folder.

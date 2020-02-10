@@ -5,7 +5,29 @@
 
 An extremely simple to use, yet fully fledged, C++ Command Line Parser library (compiled and single-header-only).
 
-## Usage
+## Integration
+
+### Header-Only
+Copy the single header file [clip.hpp](https://github.com/StefanoLusardi/clip/blob/master/single_header/CommandLineInputParser/clip.hpp) within your project and just use it.  
+Requires a C++17 compiler.
+
+### Compile
+Building the library is the preferrable approach since it leads to faster compile and link times.  
+Requires CMake (> 3.8) and a C++17 compiler.
+
+```console
+$ git clone https://github.com/stefanolusardi/clip.git
+$ cd clip && mkdir build && cd build
+$ cmake --build . --config Release
+$ cmake --build . --config Debug
+$ cmake --install . --prefix <ANYWHERE_YOU_LIKE>
+```
+
+## Platforms & Compilers
+*   Windows 10 - MSVC 16
+*   Ubuntu 18.04 - GCC 9
+
+## Basic Usage
 ```cpp
 // Create clip::CommandLineParser object
 clip::CommandLineParser clp;
@@ -38,30 +60,47 @@ if (clp.isSet(optArgValue))
 }
 ```
 
-## Integration
+## Argument Value Usage
+```cpp
+// -- clip::ArgumentValue<T> constructor is made private by design.
+//clip::ArgumentValue<std::string> argValue = clip::ArgumentValue<std::string>();        // This line will not compile.
+//clip::ArgumentValue<std::string>* argValue = new clip::ArgumentValue<std::string>();   // This line will not compile.
 
-### Header-Only
-Copy the single header file [clip.hpp](https://github.com/StefanoLusardi/clip/blob/master/single_header/CommandLineInputParser/clip.hpp) within your project and just use it.
-Requires a C++17 compiler.
+// -- It is possible to create a clip::ArgumentValue<T> using the clip::value<T>() function.
+clip::ArgumentValue<std::string> argValue = clip::value<std::string>();
 
-### Compile
-Building the library is the preferrable approach since it leads to faster compile and link times.
-Requires CMake (> 3.8) and a C++17 compiler.
+// -- C++17 automatic template deduction in declaration.
+clip::ArgumentValue argValue = clip::value<int>();
 
-```console
-$ git clone https://github.com/stefanolusardi/clip.git
-$ cd clip && mkdir build && cd build
-$ cmake --build . --config Release
-$ cmake --build . --config Debug
-$ cmake --install . --prefix <ANYWHERE_YOU_LIKE>
+// -- Default argument value can be provided using clip::value<T>(t) override.
+clip::ArgumentValue argValue = clip::value<double>(3.14);
+
+// -- Fluent API to specify further options (set required options and override default value).
+clip::ArgumentValue argValue = clip::value<std::string>("initial_value").isRequired(true).value("some_value");
 ```
 
-## Platforms & Compilers
-*   Windows 10 - MSVC 16
-*   Ubuntu 18.04 - GCC 9
+## Optional Argument Usage
+```cpp
+// -- Specify a list of option names to be used during parsing to recognize this option
+clip::OptionalArgument optArg({ "a" });
+clip::OptionalArgument optArg({ "a", "option", "another-long-option", "too-much-options" });
+
+// -- Add an option description
+clip::OptionalArgument optArg({ "a", "option" }, "This is a brief option description");
+
+// -- Give the option a clip::ArgumentValue
+// -- Note that since clip::OptionalArgument<T> is a template class, when a clip::ArgumentValue is not given, the default T used is std::nullptr_t
+clip::OptionalArgument<std::string> optArg({ "a", "option" }, "Option Description", clip::value<std::string>("hello"));
+
+// -- C++17 automatic template deduction in declaration.
+clip::OptionalArgument optArg({ "a", "option" }, "Option Description", clip::value<std::string>("hello"));
+
+// -- Exploit clip::ArgumentValue fluent API to specify argument value directly inline.
+clip::OptionalArgument optArg({ "a", "option" }, "Option Description", clip::value<std::string>("hello").isRequired(true).value("some value"););
+```
 
 ## Examples
-Examples are located within the [examples](https://github.com/StefanoLusardi/clip/tree/master/examples) folder.
+Examples are located within the [examples](https://github.com/StefanoLusardi/clip/tree/master/examples) folder.  
 It is possible to build all the examples using:
 ```console
 $ git clone https://github.com/stefanolusardi/clip.git

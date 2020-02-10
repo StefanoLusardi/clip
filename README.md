@@ -24,8 +24,8 @@ $ cmake --install . --prefix <ANYWHERE_YOU_LIKE>
 ```
 
 ## Platforms & Compilers
-*  Windows 10 - MSVC 16
-*  Ubuntu 18.04 - GCC 9
+  * Windows 10 - MSVC 16
+  * Ubuntu 18.04 - GCC 9
 
 ## Examples
 Examples are located within the [examples](https://github.com/StefanoLusardi/clip/tree/master/examples) folder.

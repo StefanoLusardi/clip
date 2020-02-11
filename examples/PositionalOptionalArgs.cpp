@@ -26,6 +26,8 @@ int main(int argc, char** argv, char** env)
 	clip::OptionalArgument optC({ "c", "c-option" }, "C description", clip::value<std::string>().isRequired(true));
 	clip::OptionalArgument optD({ "d", "constant" }, "Greek PI", clip::value<double>(3.14));
 
+	clp.addOptionalArgument(clip::OptionalArgument({"a"}));
+
 	clp.addOptionalArgument(optA);
 	clp.addOptionalArgument(std::move(optC));
 	clp.addOptionalArgument(std::move(optD));
@@ -40,6 +42,13 @@ int main(int argc, char** argv, char** env)
 	if (clp.isSet("another-positional"))
 	{
 		std::cout << "positional is set." << std::endl;
+	}
+
+	if (clp.isSet(optA))
+	{
+		std::cout << "opt A: set!" << std::endl;
+		auto c = clp.getOptionValue(optA);
+		std::cout << "Value: " << c << std::endl;
 	}
 
 	if (clp.isSet(optC))

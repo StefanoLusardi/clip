@@ -18,13 +18,13 @@ namespace clip
 	class ArgumentValue;
 
 	template<class T>
-	ArgumentValue<T>&& value()
+	ArgumentValue<T> value()
 	{
 		return ArgumentValue<T>();
 	}
 
 	template<class T>
-	ArgumentValue<T>&& value(T&& v)
+	ArgumentValue<T> value(T&& v)
 	{
 		return ArgumentValue<T>(std::forward<T>(v));
 	}
@@ -47,8 +47,8 @@ namespace clip
 		T value() const { return _v; }
 		ArgumentValue value(const T& t) { _v = t; return *this; }
 
-		friend ArgumentValue<T>&& clip::value<T>();
-		friend ArgumentValue<T>&& clip::value<T>(T&& v);
+		friend ArgumentValue<T> clip::value<T>();
+		friend ArgumentValue<T> clip::value<T>(T&& v);
 
 	protected:
 		ArgumentValue() : _v{}, _required{ false } { }

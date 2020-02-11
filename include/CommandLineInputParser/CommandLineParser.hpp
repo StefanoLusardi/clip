@@ -41,6 +41,15 @@ namespace clip
 		CommandLineParser& operator=(CommandLineParser&&) noexcept = delete;
 
 		void parse(int argc, char** argv);
+		void setAppDescription() { }
+
+		void showHelp() { }
+		void showVersion() { }
+
+		std::string appName() { }
+		std::string appVersion() { }
+		std::string appCompanyName() { }
+		std::string appDescription() { }
 
 		[[nodiscard]] auto getPositionalArgumentCount() const noexcept;
 		void addPositionalArgument(const PositionalArgument& arg);

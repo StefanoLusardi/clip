@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Api.hpp"
 #include <utility>
 
 namespace clip
@@ -21,7 +22,7 @@ namespace clip
 	}
 
 	template <typename T>
-	class ArgumentValue
+	class CLIP_API ArgumentValue
 	{
 	public:
 		ArgumentValue(const ArgumentValue&) = default;

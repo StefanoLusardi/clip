@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Api.hpp"
 #include "OptionalArgument.hpp"
 
 #include <any>
@@ -10,7 +11,7 @@ namespace clip
 {
 	using PositionalArgument = std::string;
 
-	class CommandLineParser
+	class CLIP_API CommandLineParser
 	{
 		class Match;
 
@@ -43,13 +44,13 @@ namespace clip
 		void parse(int argc, char** argv);
 		void setAppDescription() { }
 
-		void showHelp() { }
-		void showVersion() { }
+		//void showHelp() { }
+		//void showVersion() { }
 
-		std::string appName() { }
-		std::string appVersion() { }
-		std::string appCompanyName() { }
-		std::string appDescription() { }
+		//std::string appName() { }
+		//std::string appVersion() { }
+		//std::string appCompanyName() { }
+		//std::string appDescription() { }
 
 		[[nodiscard]] size_t getPositionalArgumentCount() const noexcept;
 		void addPositionalArgument(const PositionalArgument& arg);

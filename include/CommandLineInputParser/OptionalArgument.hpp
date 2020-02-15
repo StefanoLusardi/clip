@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Api.hpp"
 #include "ArgumentValue.hpp"
 
 #include <optional>
@@ -9,7 +10,7 @@
 namespace clip
 {
 	template <typename T = std::nullptr_t>
-	class OptionalArgument
+	class CLIP_API OptionalArgument
 	{
 	public:
 		~OptionalArgument() = default;

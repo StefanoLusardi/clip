@@ -39,6 +39,14 @@ namespace clip
 		
 		[[nodiscard]] bool hasValue() const noexcept { return _argValue.has_value(); }
 
+		[[nodiscard]] bool isValueRequired() const noexcept
+		{ 
+			if (!hasValue())
+				return false; // considering to throw an exception
+				
+			return _argValue.value().isRequired();
+		}
+
 		T getValue() const noexcept
 		{
 			if (!hasValue())

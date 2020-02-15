@@ -11,6 +11,5 @@ function(add_clip_example EXAMPLE_TARGET)
 	endif()
 endfunction()
 
-add_clip_example(PositionalOptionalArgs)
-
-
+add_clip_example(OptionalArgs)
+add_clip_example(PositionalArgs)

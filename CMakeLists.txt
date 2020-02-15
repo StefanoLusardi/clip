@@ -24,12 +24,13 @@ if(${CLIP_HEADER_ONLY})
 		"$<INSTALL_INTERFACE:CMAKE_INSTALL_INCLUDEDIR>")
 endif()
 
-option(CLIP_BUILD_SHARED "Build shared or static library" OFF)
+option(CLIP_BUILD_SHARED "Build shared or static library" ON)
 if(NOT ${CLIP_HEADER_ONLY})
 	message(STATUS "clip -- Using compiled version of clip")
 	set(SOURCES src/CommandLineParser.cpp)
 	set(HEADERS 
 		include/CommandLineInputParser/clip.hpp
+		include/CommandLineInputParser/Api.hpp
 		include/CommandLineInputParser/CommandLineParser.hpp
 		include/CommandLineInputParser/OptionalArgument.hpp
 		include/CommandLineInputParser/ArgumentValue.hpp

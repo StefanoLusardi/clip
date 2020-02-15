@@ -164,7 +164,7 @@ namespace clip
 			}
 		}
 
-		[[nodiscard]] auto getPositionalArgumentCount() const noexcept { return positionalArgs.size(); }
+		[[nodiscard]] size_t getPositionalArgumentCount() const noexcept { return positionalArgs.size(); }
 		void addPositionalArgument(const PositionalArgument& arg) { positionalArgs.emplace_back(arg); }
 		void addPositionalArgument(PositionalArgument&& arg) { positionalArgs.emplace_back(arg); }
 		bool isSet(PositionalArgument&& arg) const noexcept
@@ -178,7 +178,7 @@ namespace clip
 			[arg](const PositionalArgumentParsed& a) { return arg == a.name; });
 		}
 
-		[[nodiscard]] auto getOptionalArgumentCount() const noexcept { return optionalArgs.size(); }
+		[[nodiscard]] size_t getOptionalArgumentCount() const noexcept { return optionalArgs.size(); }
 
 		template <class T>
 		void addOptionalArgument(const OptionalArgument<T>& opt)
@@ -203,7 +203,7 @@ namespace clip
 		}
 
 		template <class T>
-		T getOptionValue(OptionalArgument<T>& opt)
+		T getOptionValue(const OptionalArgument<T>& opt)
 		{
 			if (const auto o = findOption(opt); o != optionalArgs_Parsed.end() && o->value.has_value())
 				return std::any_cast<T>(o->value.value());

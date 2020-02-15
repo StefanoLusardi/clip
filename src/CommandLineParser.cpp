@@ -1,7 +1,11 @@
-#include "../include/CommandLineInputParser/CommandLineParser.hpp"
+#include "CommandLineInputParser/CommandLineParser.hpp"
 #include "Match.hpp"
 
 #include <regex>
+
+#ifndef CLIP_COMPILED_LIB
+#error Please define CLIP_COMPILED_LIB
+#endif
 
 namespace clip
 {
@@ -15,7 +19,7 @@ namespace clip
 		}
 	}
 
-	auto CommandLineParser::getPositionalArgumentCount() const noexcept { return positionalArgs.size(); }
+	size_t CommandLineParser::getPositionalArgumentCount() const noexcept { return positionalArgs.size(); }
 	
 	void CommandLineParser::addPositionalArgument(const PositionalArgument& arg) { positionalArgs.emplace_back(arg); }
 	
@@ -31,7 +35,7 @@ namespace clip
 		return std::any_of(positionalArgs_Parsed.begin(), positionalArgs_Parsed.end(), [arg](const PositionalArgumentParsed& a) { return arg == a.name; });
 	}
 
-	auto CommandLineParser::getOptionalArgumentCount() const noexcept { return optionalArgs.size(); }
+	size_t CommandLineParser::getOptionalArgumentCount() const noexcept { return optionalArgs.size(); }
 
 	void CommandLineParser::parseToken(std::string_view s)
 	{
@@ -83,7 +87,7 @@ namespace clip
 
 						case Match::Index::Value:
 							const std::string v = m.str();
-							argParsed.value = isNumeric(v) ? std::any(std::stod(v)) : v;
+							argParsed.parsedValue = isNumeric(v) ? std::any(std::stod(v)) : v;
 							break;
 					}
 					match.next();

@@ -5,7 +5,6 @@ set(CLIP_VERSION_MINOR 1)
 set(CLIP_VERSION ${CLIP_VERSION_MAJOR}.${CLIP_VERSION_MINOR})
 project(clip VERSION ${CLIP_VERSION} LANGUAGES CXX)
 message(STATUS "clip -- Building version: ${CLIP_VERSION}")
-include(GNUInstallDirs)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_EXTENSIONS OFF)
@@ -15,13 +14,13 @@ if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE "Release")
 endif()
 
-option(CLIP_HEADER_ONLY "Use header-only or compiled library" OFF)
+option(CLIP_HEADER_ONLY "Use header-only or compiled library" ON)
 if(${CLIP_HEADER_ONLY})
 	message(STATUS "clip -- Using header-only version of clip")
 	add_library(clip_header_only INTERFACE)
 	add_library(clip::clip_header_only ALIAS clip_header_only)
 	target_include_directories(clip_header_only INTERFACE
-        "$<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/single_header">
+        "$<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/single_header>"
 		"$<INSTALL_INTERFACE:CMAKE_INSTALL_INCLUDEDIR>")
 endif()
 
@@ -45,8 +44,8 @@ if(NOT ${CLIP_HEADER_ONLY})
 	target_include_directories(clip PUBLIC
         "$<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/include>"
         "$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>")
+	set_target_properties(clip PROPERTIES DEBUG_POSTFIX d)
 	set_target_properties(clip PROPERTIES VERSION ${CLIP_VERSION} SOVERSION ${CLIP_VERSION_MAJOR})
-	#set_target_properties(clip PROPERTIES DEBUG_POSTFIX d)
 endif()
 
 option(CLIP_BUILD_EXAMPLES "Build library examples" ON)

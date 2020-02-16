@@ -18,7 +18,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 
-option(CLIP_HEADER_ONLY "Use header-only or compiled library" OFF)
+option(CLIP_HEADER_ONLY "Use header-only or compiled library" ON)
 if(${CLIP_HEADER_ONLY})
 	message(STATUS "clip -- Using header-only version of clip")
 	add_library(clip_header_only INTERFACE)

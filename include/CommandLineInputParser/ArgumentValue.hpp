@@ -36,8 +36,8 @@ namespace clip
 		bool isRequired() const { return _required; }
 		ArgumentValue isRequired(bool required) { _required = required; return *this; }
 		
-		T value() const { return _v; }
-		ArgumentValue value(const T& t) { _v = t; return *this; }
+		T defaultValue() const { return _v; }
+		ArgumentValue defaultValue(const T& t) { _v = t; return *this; }
 
 		friend ArgumentValue<T> clip::value<T>();
 		friend ArgumentValue<T> clip::value<T>(T&& v);

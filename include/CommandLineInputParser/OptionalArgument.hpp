@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Api.hpp"
 #include "ArgumentValue.hpp"
 
 #include <optional>
@@ -9,7 +10,7 @@
 namespace clip
 {
 	template <typename T = std::nullptr_t>
-	class OptionalArgument
+	class CLIP_API OptionalArgument
 	{
 	public:
 		~OptionalArgument() = default;
@@ -39,12 +40,20 @@ namespace clip
 		
 		[[nodiscard]] bool hasValue() const noexcept { return _argValue.has_value(); }
 
+		[[nodiscard]] bool isValueRequired() const noexcept
+		{ 
+			if (!hasValue())
+				return false; // considering to throw an exception
+				
+			return _argValue.value().isRequired();
+		}
+
 		T getValue() const noexcept
 		{
 			if (!hasValue())
 				return {};
 
-			return _argValue.value().value();
+			return _argValue.value().defaultValue();
 		}
 	
 	private:

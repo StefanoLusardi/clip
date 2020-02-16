@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Api.hpp"
 #include <utility>
 
 namespace clip
@@ -9,19 +10,19 @@ namespace clip
 	class ArgumentValue;
 
 	template<class T>
-	ArgumentValue<T>&& value()
+	ArgumentValue<T> value()
 	{
 		return ArgumentValue<T>();
 	}
 
 	template<class T>
-	ArgumentValue<T>&& value(T&& v)
+	ArgumentValue<T> value(T&& v)
 	{
 		return ArgumentValue<T>(std::forward<T>(v));
 	}
 
 	template <typename T>
-	class ArgumentValue
+	class CLIP_API ArgumentValue
 	{
 	public:
 		ArgumentValue(const ArgumentValue&) = default;
@@ -35,11 +36,11 @@ namespace clip
 		bool isRequired() const { return _required; }
 		ArgumentValue isRequired(bool required) { _required = required; return *this; }
 		
-		T value() const { return _v; }
-		ArgumentValue value(const T& t) { _v = t; return *this; }
+		T defaultValue() const { return _v; }
+		ArgumentValue defaultValue(const T& t) { _v = t; return *this; }
 
-		friend ArgumentValue<T>&& clip::value<T>();
-		friend ArgumentValue<T>&& clip::value<T>(T&& v);
+		friend ArgumentValue<T> clip::value<T>();
+		friend ArgumentValue<T> clip::value<T>(T&& v);
 
 	protected:
 		ArgumentValue() : _v{}, _required{ false } { }

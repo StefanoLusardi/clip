@@ -1,32 +1,28 @@
 #include <CommandLineInputParser/clip.hpp>
-#include <iostream>
-
+#include "ExampleUtils.hpp"
 
 int main(int argc, char** argv, char** env)
 {
-	// Dump raw input
-	{
-		std::cout << "Executable path: " << argv[0] << "\n\n";
-		std::cout << "Command Line Inputs: " << "\n";
-		for (int i = 1; i < argc; ++i) { std::cout << argv[i] << std::endl; } std::cout << "\n\n";
-		//while(*env) { std::cout << *env++ << std::endl; } std::cout << "\n\n";
-	}
+	clip::utils::dumpRawInput(argc, argv, env);
 
-	// -- Specify a list of option names to be used during parsing to recognize this option
-	clip::OptionalArgument optArg({ "a" });
-	clip::OptionalArgument optArg({ "a", "option", "another-long-option", "too-much-options" });
+	clip::CommandLineParser clp;
 
-	// -- Add an option description
-	clip::OptionalArgument optArg({ "a", "option" }, "This is a brief option description");
+	clip::OptionalArgument optA({ "a", "a_opt" });
+	clip::OptionalArgument optB({ "b", "b_opt" }, "B description");
+	clip::OptionalArgument optC({ "c", "c_opt" }, "C description", clip::value<double>(3.14));
+	clip::OptionalArgument optD({ "d", "d_opt" }, "D description", clip::value<std::string>().isRequired(true));
 
-	// -- Give the option a clip::ArgumentValue
-	// -- Note that since clip::OptionalArgument<T> is a template class, when a clip::ArgumentValue is not given, the default T used is std::nullptr_t
-	clip::OptionalArgument<std::string> optArg({ "a", "option" }, "Option Description", clip::value<std::string>("hello"));
+	clp.addOptionalArgument(optA);
+	clp.addOptionalArgument(optB);
+	clp.addOptionalArgument(optC);
+	clp.addOptionalArgument(optD);
 
-	// -- C++17 automatic template deduction in declaration.
-	clip::OptionalArgument optArg({ "a", "option" }, "Option Description", clip::value<std::string>("hello"));
+	clp.parse(argc, argv);
 
-	// -- Exploit clip::ArgumentValue fluent API to specify argument value directly inline.
-	clip::OptionalArgument optArg({ "a", "option" }, "Option Description", clip::value<std::string>("hello").isRequired(true).value("some value"););
+	clip::utils::dumpOptionalArgument(clp, optA);
+	clip::utils::dumpOptionalArgument(clp, optB);
+	clip::utils::dumpOptionalArgument(clp, optC);
+	clip::utils::dumpOptionalArgument(clp, optD);
 
+	return 0;
 }

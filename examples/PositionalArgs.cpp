@@ -14,15 +14,8 @@ int main(int argc, char** argv, char** env)
 	
 	clp.parse(argc, argv);
 
-	if (clp.isSet(posArg))
-	{
-		//std::cout << "Positional arg " << posArg.name() << " (" << posArg.description() << ")" << " is set." << std::endl;
-	}
-
-	if (clp.isSet("verbose"))
-	{
-		std::cout << "positional is set." << std::endl;
-	}
+	clip::utils::dumpPositionalArgument(clp, posArg);
+	clip::utils::dumpPositionalArgument(clp, "verbose");
 
 	return 0;
-}
+} 

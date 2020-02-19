@@ -13,3 +13,4 @@ endfunction()
 
 add_clip_example(OptionalArgs)
 add_clip_example(PositionalArgs)
+add_clip_example(MixedArgs)

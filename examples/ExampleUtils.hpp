@@ -20,7 +20,8 @@ namespace clip::utils
 		auto printNames = [](const auto& opt)
 		{
 			const auto names{ opt.names() };
-			std::cout << "Option names: ";
+			std::cout << "- Optional Argument";
+			std::cout << "  " << "Option names: ";
 			std::for_each(names.cbegin(), names.cend(), [](const auto& name) { std::cout << "-" << name << " "; });
 		};
 
@@ -28,19 +29,30 @@ namespace clip::utils
 		{
 			printNames(opt);
 			std::cout << "\n" 
-				<< "Description: " << opt.description() << "\n"
-				<< "Has Default Value: " << std::boolalpha << opt.hasValue() << "\n"
-				<< "Is Value Required: " << std::boolalpha << opt.isValueRequired() << "\n";
+				<< "  " << "Description: " << opt.description() << "\n"
+				<< "  " << "Has Default Value: " << std::boolalpha << opt.hasValue() << "\n"
+				<< "  " << "Is Value Required: " << std::boolalpha << opt.isValueRequired() << "\n";
 
 			if (const auto optValue = clp.getOptionValue(opt); optValue.has_value())
-				std::cout << "Value: " << optValue.value() << "\n";
+				std::cout << "  " << "Value: " << optValue.value() << "\n";
 		}
 		else
 		{
 			printNames(opt);
-			std::cout << "is not set. " << "\n";
+			std::cout << "  " << "is not set. " << "\n";
 		}
 
 		std::cout << "\n";
 	};
+
+	void dumpPositionalArgument(const clip::CommandLineParser& clp, const clip::PositionalArgument& pos)
+	{
+		std::cout << "- Positional Argument" << "\n";
+		std::cout << pos << "\n";
+
+		const auto isSetStr = clp.isSet(pos) ? "  is set" : "  is not set";
+		std::cout << isSetStr << "\n";
+
+		std::cout << "\n";
+	}
 }

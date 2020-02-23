@@ -43,9 +43,9 @@ namespace clip
 
 		bool isRequired() const { return _required; }
 		ArgumentValue isRequired(bool required) { _required = required; return *this; }
-
-		T value() const { return _v; }
-		ArgumentValue value(const T& t) { _v = t; return *this; }
+		
+		T defaultValue() const { return _v; }
+		ArgumentValue defaultValue(const T& t) { _v = t; return *this; }
 
 		friend ArgumentValue<T> clip::value<T>();
 		friend ArgumentValue<T> clip::value<T>(T&& v);
@@ -73,7 +73,7 @@ namespace clip
 			: _names{ names }
 			, _description{ description }
 			, _argValue{ std::nullopt } { }
-
+		
 		OptionalArgument(const std::vector<std::string>& names, const std::string& description, ArgumentValue<T>&& value)
 			: _names{ names }
 			, _description{ description }
@@ -85,19 +85,27 @@ namespace clip
 			, _argValue{ std::move(other._argValue) } { }
 
 		std::vector<std::string> names() const noexcept { return _names; }
-
+		
 		std::string description() const noexcept { return _description; }
-
+		
 		[[nodiscard]] bool hasValue() const noexcept { return _argValue.has_value(); }
+
+		[[nodiscard]] bool isValueRequired() const noexcept
+		{ 
+			if (!hasValue())
+				return false; // considering to throw an exception
+				
+			return _argValue.value().isRequired();
+		}
 
 		T getValue() const noexcept
 		{
 			if (!hasValue())
 				return {};
 
-			return _argValue.value().value();
+			return _argValue.value().defaultValue();
 		}
-
+	
 	private:
 		std::optional<ArgumentValue<T>> _argValue;
 		std::vector<std::string> _names;
@@ -139,16 +147,15 @@ namespace clip
 		struct OptionalArgumentParsed
 		{
 			OptionalArgumentParsed() { }
-			OptionalArgumentParsed(std::string_view s) : name{ s }, value{ std::nullopt } { }
+			OptionalArgumentParsed(std::string_view s) : name{ s }, parsedValue{ std::nullopt } { }
 
 			std::string name;
-			std::optional<std::any> value;
+			std::optional<std::any> parsedValue;
 		};
 
 	public:
 		explicit CommandLineParser() = default;
 		~CommandLineParser() = default;
-
 		CommandLineParser(const CommandLineParser&) = delete;
 		CommandLineParser(CommandLineParser&&) noexcept = delete;
 		CommandLineParser& operator=(const CommandLineParser&) = delete;
@@ -164,28 +171,28 @@ namespace clip
 			}
 		}
 
-		[[nodiscard]] size_t getPositionalArgumentCount() const noexcept { return positionalArgs.size(); }
-		void addPositionalArgument(const PositionalArgument& arg) { positionalArgs.emplace_back(arg); }
-		void addPositionalArgument(PositionalArgument&& arg) { positionalArgs.emplace_back(arg); }
+		[[nodiscard]] size_t getPositionalArgumentCount() const noexcept { return _posArgsDeclared.size(); }
+		void addPositionalArgument(const PositionalArgument& arg) { _posArgsDeclared.emplace_back(arg); }
+		void addPositionalArgument(PositionalArgument&& arg) { _posArgsDeclared.emplace_back(arg); }
 		bool isSet(PositionalArgument&& arg) const noexcept
 		{
-			return std::any_of(positionalArgs_Parsed.begin(), positionalArgs_Parsed.end(), 
+			return std::any_of(_posArgsParsed.begin(), _posArgsParsed.end(), 
 			[arg](const PositionalArgumentParsed& a) { return arg == a.name; });
 		}
 		bool isSet(const PositionalArgument& arg) const noexcept
 		{
-			return std::any_of(positionalArgs_Parsed.begin(), positionalArgs_Parsed.end(), 
+			return std::any_of(_posArgsParsed.begin(), _posArgsParsed.end(), 
 			[arg](const PositionalArgumentParsed& a) { return arg == a.name; });
 		}
 
-		[[nodiscard]] size_t getOptionalArgumentCount() const noexcept { return optionalArgs.size(); }
+		[[nodiscard]] size_t getOptionalArgumentCount() const noexcept { return _optArgsDeclared.size(); }
 
 		template <class T>
 		void addOptionalArgument(const OptionalArgument<T>& opt)
 		{
 			std::any optValue = opt.getValue();
 			OptionalArgument<std::any> optArg(opt.names(), opt.description(), clip::value<std::any>(std::move(optValue)));
-			optionalArgs.push_back(std::move(optArg));
+			_optArgsDeclared.push_back(std::move(optArg));
 		}
 
 		template <class T>
@@ -193,22 +200,34 @@ namespace clip
 		{
 			std::any optValue = opt.getValue();
 			OptionalArgument<std::any> optArg(opt.names(), opt.description(), clip::value<std::any>(std::move(optValue)));
-			optionalArgs.push_back(std::move(optArg));
+			_optArgsDeclared.push_back(std::move(optArg));
 		}
 
 		template <class T>
-		bool isSet(const OptionalArgument<T>& opt)
+		bool isSet(const OptionalArgument<T>& opt) const
 		{
-			return findOption(opt) != optionalArgs_Parsed.end();
+			return findOption(opt) != _optArgsParsed.end();
 		}
 
 		template <class T>
-		T getOptionValue(const OptionalArgument<T>& opt)
+		std::optional<T> getOptionValue(const OptionalArgument<T>& opt) const
 		{
-			if (const auto o = findOption(opt); o != optionalArgs_Parsed.end() && o->value.has_value())
-				return std::any_cast<T>(o->value.value());
+			if (const auto o = findOption(opt); o != _optArgsParsed.end()
+				&& o->parsedValue.has_value() // The parsed option actually holds a value
+				&& opt.hasValue()) // The user has defined a value for this option
+			{
+				try
+				{
+					return std::any_cast<T>(o->parsedValue.value());
+				}
+				catch (const std::bad_any_cast & e)
+				{
+					std::cout << e.what() << "\n";
+					std::cout << "Type mismatch. ArgumentValue type declared and parsed are incompatible."  << "\n";
+				}
+			}
 
-			return {};
+			return std::nullopt;
 		}
 
 	protected:
@@ -222,7 +241,7 @@ namespace clip
 
 			if (isPositional(s))
 			{
-				positionalArgs_Parsed.emplace_back(s);
+				_posArgsParsed.emplace_back(s);
 				return;
 			}
 
@@ -262,20 +281,20 @@ namespace clip
 
 							case Match::Index::Value:
 								const std::string v = m.str();
-								argParsed.value = isNumeric(v) ? std::any(std::stod(v)) : v;
+								argParsed.parsedValue = isNumeric(v) ? std::any(std::stod(v)) : v;
 								break;
 						}
 						match.next();
 					}
 				}
-				optionalArgs_Parsed.emplace_back(argParsed);
+				_optArgsParsed.emplace_back(argParsed);
 			}
 		}
 
 		template <class T>
-		std::vector<OptionalArgumentParsed>::iterator findOption(const OptionalArgument<T>& opt)
+		auto findOption(const OptionalArgument<T>& opt) const
 		{
-			return std::find_if(optionalArgs_Parsed.begin(), optionalArgs_Parsed.end(), [&opt](const auto arg)
+			return std::find_if(_optArgsParsed.begin(), _optArgsParsed.end(), [&opt](const auto arg)
 			{
 				auto names = opt.names();
 				return std::any_of(names.begin(), names.end(), [&arg](const auto name)
@@ -287,10 +306,12 @@ namespace clip
 
 	private:
 		std::string _exePath;
-		std::vector<OptionalArgument<std::any>> optionalArgs;
-		std::vector<PositionalArgument> positionalArgs;
-		std::vector<OptionalArgumentParsed> optionalArgs_Parsed;
-		std::vector<PositionalArgumentParsed> positionalArgs_Parsed;
+		
+		std::vector<OptionalArgument<std::any>> _optArgsDeclared;
+		std::vector<OptionalArgumentParsed> _optArgsParsed;
+
+		std::vector<PositionalArgument> _posArgsDeclared;
+		std::vector<PositionalArgumentParsed> _posArgsParsed;
 	};
 
 }

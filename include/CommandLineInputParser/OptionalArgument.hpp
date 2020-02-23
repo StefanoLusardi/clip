@@ -53,7 +53,7 @@ namespace clip
 			if (!hasValue())
 				return {};
 
-			return _argValue.value().value();
+			return _argValue.value().defaultValue();
 		}
 	
 	private:

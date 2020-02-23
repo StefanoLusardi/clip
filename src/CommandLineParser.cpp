@@ -19,23 +19,23 @@ namespace clip
 		}
 	}
 
-	size_t CommandLineParser::getPositionalArgumentCount() const noexcept { return positionalArgs.size(); }
+	size_t CommandLineParser::getPositionalArgumentCount() const noexcept { return _posArgsDeclared.size(); }
 	
-	void CommandLineParser::addPositionalArgument(const PositionalArgument& arg) { positionalArgs.emplace_back(arg); }
+	void CommandLineParser::addPositionalArgument(const PositionalArgument& arg) { _posArgsDeclared.emplace_back(arg); }
 	
-	void CommandLineParser::addPositionalArgument(PositionalArgument&& arg) { positionalArgs.emplace_back(arg); }
+	void CommandLineParser::addPositionalArgument(PositionalArgument&& arg) { _posArgsDeclared.emplace_back(arg); }
 
 	bool CommandLineParser::isSet(PositionalArgument&& arg) const noexcept
 	{
-		return std::any_of(positionalArgs_Parsed.begin(), positionalArgs_Parsed.end(), [arg](const PositionalArgumentParsed& a) { return arg == a.name; });
+		return std::any_of(_posArgsParsed.begin(), _posArgsParsed.end(), [arg](const PositionalArgumentParsed& a) { return arg == a.name; });
 	}
 	
 	bool CommandLineParser::isSet(const PositionalArgument& arg) const noexcept
 	{
-		return std::any_of(positionalArgs_Parsed.begin(), positionalArgs_Parsed.end(), [arg](const PositionalArgumentParsed& a) { return arg == a.name; });
+		return std::any_of(_posArgsParsed.begin(), _posArgsParsed.end(), [arg](const PositionalArgumentParsed& a) { return arg == a.name; });
 	}
 
-	size_t CommandLineParser::getOptionalArgumentCount() const noexcept { return optionalArgs.size(); }
+	size_t CommandLineParser::getOptionalArgumentCount() const noexcept { return _optArgsParsed.size(); }
 
 	void CommandLineParser::parseToken(std::string_view s)
 	{
@@ -47,7 +47,7 @@ namespace clip
 
 		if (isPositional(s))
 		{
-			positionalArgs_Parsed.emplace_back(s);
+			_posArgsParsed.emplace_back(s);
 			return;
 		}
 
@@ -93,7 +93,7 @@ namespace clip
 					match.next();
 				}
 			}
-			optionalArgs_Parsed.emplace_back(argParsed);
+			_optArgsParsed.emplace_back(argParsed);
 		}
 	}
 }

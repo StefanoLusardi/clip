@@ -35,14 +35,14 @@ namespace clip
 	public:
 		explicit CommandLineParser() = default;
 		~CommandLineParser() = default;
-
 		CommandLineParser(const CommandLineParser&) = delete;
 		CommandLineParser(CommandLineParser&&) noexcept = delete;
 		CommandLineParser& operator=(const CommandLineParser&) = delete;
 		CommandLineParser& operator=(CommandLineParser&&) noexcept = delete;
 
 		void parse(int argc, char** argv);
-		void setAppDescription() { }
+
+		//void setAppDescription() { }
 
 		//void showHelp() { }
 		//void showVersion() { }
@@ -65,7 +65,7 @@ namespace clip
 		{
 			std::any optValue = opt.getValue();
 			OptionalArgument<std::any> optArg(opt.names(), opt.description(), clip::value<std::any>(std::move(optValue)));
-			optionalArgs.push_back(std::move(optArg));
+			_optArgsDeclared.push_back(std::move(optArg));
 		}
 
 		template <class T>
@@ -73,19 +73,19 @@ namespace clip
 		{
 			std::any optValue = opt.getValue();
 			OptionalArgument<std::any> optArg(opt.names(), opt.description(), clip::value<std::any>(std::move(optValue)));
-			optionalArgs.push_back(std::move(optArg));
+			_optArgsDeclared.push_back(std::move(optArg));
 		}
 
 		template <class T>
 		bool isSet(const OptionalArgument<T>& opt) const
 		{
-			return findOption(opt) != optionalArgs_Parsed.end();
+			return findOption(opt) != _optArgsParsed.end();
 		}
 
 		template <class T>
 		std::optional<T> getOptionValue(const OptionalArgument<T>& opt) const
 		{
-			if (const auto o = findOption(opt); o != optionalArgs_Parsed.end()
+			if (const auto o = findOption(opt); o != _optArgsParsed.end()
 				&& o->parsedValue.has_value() // The parsed option actually holds a value
 				&& opt.hasValue()) // The user has defined a value for this option
 			{
@@ -98,7 +98,6 @@ namespace clip
 					std::cout << e.what() << "\n";
 					std::cout << "Type mismatch. ArgumentValue type declared and parsed are incompatible."  << "\n";
 				}
-
 			}
 
 			return std::nullopt;
@@ -110,7 +109,7 @@ namespace clip
 		template <class T>
 		auto findOption(const OptionalArgument<T>& opt) const
 		{
-			return std::find_if(optionalArgs_Parsed.begin(), optionalArgs_Parsed.end(), [&opt](const auto arg)
+			return std::find_if(_optArgsParsed.begin(), _optArgsParsed.end(), [&opt](const auto arg)
 			{
 				auto names = opt.names();
 				return std::any_of(names.begin(), names.end(), [&arg](const auto name)
@@ -122,11 +121,12 @@ namespace clip
 
 	private:
 		std::string _exePath;
-		std::vector<OptionalArgument<std::any>> optionalArgs;
-		std::vector<PositionalArgument> positionalArgs;
 
-		std::vector<OptionalArgumentParsed> optionalArgs_Parsed;
-		std::vector<PositionalArgumentParsed> positionalArgs_Parsed;
+		std::vector<OptionalArgument<std::any>> _optArgsDeclared;
+		std::vector<OptionalArgumentParsed> _optArgsParsed;
+
+		std::vector<PositionalArgument> _posArgsDeclared;
+		std::vector<PositionalArgumentParsed> _posArgsParsed;
 	};
 
 }

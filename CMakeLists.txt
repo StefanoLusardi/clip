@@ -10,6 +10,8 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH};${CMAKE_CURRENT_SOURCE_DIR}/cmake)
+
 if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE "Release")
 endif()
@@ -62,7 +64,7 @@ if(${CLIP_BUILD_EXAMPLES})
     add_subdirectory(examples)
 endif()
 
-option(CLIP_BUILD_TESTS "Build library tests" OFF)
+option(CLIP_BUILD_TESTS "Build library tests" ON)
 if(${CLIP_BUILD_TESTS})
     message(STATUS "clip -- Building tests")
     add_subdirectory(tests)

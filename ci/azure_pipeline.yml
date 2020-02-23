@@ -8,9 +8,10 @@ jobs:
 
   pool:
     vmImage: 'ubuntu-18.04'
-    variables:
-      CC: gcc-9
-      CXX: g++-9
+  
+  variables:
+    CC: gcc-9
+    CXX: g++-9
 
   steps:
     - task: Bash@3

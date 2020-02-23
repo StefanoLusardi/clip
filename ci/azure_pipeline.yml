@@ -8,6 +8,9 @@ jobs:
 
   pool:
     vmImage: 'ubuntu-18.04'
+    variables:
+      CC: gcc-9
+      CXX: g++-9
 
   steps:
     - task: Bash@3
@@ -16,7 +19,8 @@ jobs:
         targetType: 'inline'
         script: |
           sudo apt install ninja-build
-          echo 'Ninja Version: ' ninja --version
+          echo 'Ninja Version: '
+          ninja --version
     - task: CMake@1
       displayName: 'CMake - configure'
       inputs:

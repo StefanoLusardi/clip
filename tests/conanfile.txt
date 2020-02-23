@@ -1,0 +1,17 @@
+[requires]
+gtest/1.10.0@_/_
+
+[generators]
+cmake
+
+[options]
+gtest:shared=True
+gtest:build_gmock=True
+gtest:no_main=True
+
+[imports]
+bin, gtest*.dll -> ../bin
+bin, gmock*.dll -> ../bin
+
+lib, gtest*.so -> ../bin
+lib, gmock*.so -> ../bin

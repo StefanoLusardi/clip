@@ -15,16 +15,16 @@ namespace clip
 	public:
 		~OptionalArgument() = default;
 
-		OptionalArgument(const std::vector<std::string>& names)
+		explicit OptionalArgument(const std::vector<std::string>& names)
 			: _names{ names }
 			, _argValue{ std::nullopt } { }
 
-		OptionalArgument(const std::vector<std::string>& names, const std::string& description)
+		explicit OptionalArgument(const std::vector<std::string>& names, const std::string& description)
 			: _names{ names }
 			, _description{ description }
 			, _argValue{ std::nullopt } { }
 		
-		OptionalArgument(const std::vector<std::string>& names, const std::string& description, ArgumentValue<T>&& value)
+		explicit OptionalArgument(const std::vector<std::string>& names, const std::string& description, ArgumentValue<T>&& value)
 			: _names{ names }
 			, _description{ description }
 			, _argValue{ std::make_optional(value) } { }

@@ -34,16 +34,16 @@ namespace clip
 
 		struct PositionalArgumentParsed
 		{
-			PositionalArgumentParsed() { }
-			PositionalArgumentParsed(std::string_view s) : name{ s } { }
+			explicit PositionalArgumentParsed() { }
+			explicit PositionalArgumentParsed(std::string_view s) : name{ s } { }
 
 			std::string name;
 		};
 
 		struct OptionalArgumentParsed
 		{
-			OptionalArgumentParsed() { }
-			OptionalArgumentParsed(std::string_view s) : name{ s }, parsedValue{ std::nullopt } { }
+			explicit OptionalArgumentParsed() { }
+			explicit OptionalArgumentParsed(std::string_view s) : name{ s }, parsedValue{ std::nullopt } { }
 
 			std::string name;
 			std::optional<clip_any> parsedValue;

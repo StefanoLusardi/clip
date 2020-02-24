@@ -43,8 +43,8 @@ namespace clip
 		friend ArgumentValue<T> clip::value<T>(T&& v);
 
 	protected:
-		ArgumentValue() : _v{}, _required{ false } { }
-		ArgumentValue(T&& v) : _v{ v }, _required{ false } { }
+		explicit ArgumentValue() : _v{}, _required{ false } { }
+		explicit ArgumentValue(T&& v) : _v{ v }, _required{ false } { }
 
 	private:
 		T _v;

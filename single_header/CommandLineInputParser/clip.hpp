@@ -67,8 +67,8 @@ namespace clip
 		friend ArgumentValue<T> clip::value<T>(T&& v);
 
 	protected:
-		ArgumentValue() : _v{}, _required{ false } { }
-		ArgumentValue(T&& v) : _v{ v }, _required{ false } { }
+		explicit ArgumentValue() : _v{}, _required{ false } { }
+		explicit ArgumentValue(T&& v) : _v{ v }, _required{ false } { }
 
 	private:
 		T _v;
@@ -81,16 +81,16 @@ namespace clip
 	public:
 		~OptionalArgument() = default;
 
-		OptionalArgument(const std::vector<std::string>& names)
+		explicit OptionalArgument(const std::vector<std::string>& names)
 			: _names{ names }
 			, _argValue{ std::nullopt } { }
 
-		OptionalArgument(const std::vector<std::string>& names, const std::string& description)
+		explicit OptionalArgument(const std::vector<std::string>& names, const std::string& description)
 			: _names{ names }
 			, _description{ description }
 			, _argValue{ std::nullopt } { }
 
-		OptionalArgument(const std::vector<std::string>& names, const std::string& description, ArgumentValue<T>&& value)
+		explicit OptionalArgument(const std::vector<std::string>& names, const std::string& description, ArgumentValue<T>&& value)
 			: _names{ names }
 			, _description{ description }
 			, _argValue{ std::make_optional(value) } { }
@@ -153,16 +153,16 @@ namespace clip
 
 		struct PositionalArgumentParsed
 		{
-			PositionalArgumentParsed() { }
-			PositionalArgumentParsed(std::string_view s) : name{ s } { }
+			explicit PositionalArgumentParsed() { }
+			explicit PositionalArgumentParsed(std::string_view s) : name{ s } { }
 
 			std::string name;
 		};
 
 		struct OptionalArgumentParsed
 		{
-			OptionalArgumentParsed() { }
-			OptionalArgumentParsed(std::string_view s) : name{ s }, parsedValue{ std::nullopt } { }
+			explicit OptionalArgumentParsed() { }
+			explicit OptionalArgumentParsed(std::string_view s) : name{ s }, parsedValue{ std::nullopt } { }
 
 			std::string name;
 			std::optional<clip_any> parsedValue;

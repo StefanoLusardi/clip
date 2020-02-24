@@ -87,7 +87,7 @@ namespace clip
 
 						case Match::Index::Value:
 							const std::string v = m.str();
-							argParsed.parsedValue = isNumeric(v) ? std::any(std::stod(v)) : v;
+							argParsed.parsedValue = isNumeric(v) ? clip_any(std::stod(v)) : v;
 							break;
 					}
 					match.next();

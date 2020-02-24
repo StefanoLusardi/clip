@@ -3,9 +3,26 @@
 #include "Api.hpp"
 #include "OptionalArgument.hpp"
 
-#include <any>
 #include <algorithm>
 #include <string_view>
+#include <iostream>
+
+#if defined(__GNUC__)
+/*
+** Workaround to fix GCC libstdc++ bug: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=90415
+** Proposed fix is based on: https://stackoverflow.com/questions/57332965/incomplete-type-for-stdany-when-gmocking-interface
+** See also the same issue on Clang: https://stackoverflow.com/questions/54922619/type-trait-on-stdreference-wrapperstdany
+*/
+	#include <experimental/any>
+	#define clip_any std::experimental::fundamentals_v1::any
+	#define any_cast experimental::fundamentals_v1::any_cast
+	#define bad_any_cast experimental::fundamentals_v1::bad_any_cast
+#else
+	#include <any>
+	#define clip_any std::any
+	#define any_cast any_cast
+	#define bad_any_cast bad_any_cast
+#endif
 
 namespace clip
 {
@@ -29,7 +46,7 @@ namespace clip
 			OptionalArgumentParsed(std::string_view s) : name{ s }, parsedValue{ std::nullopt } { }
 
 			std::string name;
-			std::optional<std::any> parsedValue;
+			std::optional<clip_any> parsedValue;
 		};
 
 	public:
@@ -63,16 +80,16 @@ namespace clip
 		template <class T>
 		void addOptionalArgument(const OptionalArgument<T>& opt)
 		{
-			std::any optValue = opt.getValue();
-			OptionalArgument<std::any> optArg(opt.names(), opt.description(), clip::value<std::any>(std::move(optValue)));
+			clip_any optValue = opt.getValue();
+			OptionalArgument<clip_any> optArg(opt.names(), opt.description(), clip::value<clip_any>(std::move(optValue)));
 			_optArgsDeclared.push_back(std::move(optArg));
 		}
 
 		template <class T>
 		void addOptionalArgument(OptionalArgument<T>&& opt)
 		{
-			std::any optValue = opt.getValue();
-			OptionalArgument<std::any> optArg(opt.names(), opt.description(), clip::value<std::any>(std::move(optValue)));
+			clip_any optValue = opt.getValue();
+			OptionalArgument<clip_any> optArg(opt.names(), opt.description(), clip::value<clip_any>(std::move(optValue)));
 			_optArgsDeclared.push_back(std::move(optArg));
 		}
 
@@ -122,7 +139,7 @@ namespace clip
 	private:
 		std::string _exePath;
 
-		std::vector<OptionalArgument<std::any>> _optArgsDeclared;
+		std::vector<OptionalArgument<clip_any>> _optArgsDeclared;
 		std::vector<OptionalArgumentParsed> _optArgsParsed;
 
 		std::vector<PositionalArgument> _posArgsDeclared;

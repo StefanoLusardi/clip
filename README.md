@@ -1,7 +1,7 @@
 # clip
 
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/c67464255ca74d61a2018f5abec9b764)](https://app.codacy.com/manual/StefanoLusardi/clip?utm_source=github.com&utm_medium=referral&utm_content=StefanoLusardi/clip&utm_campaign=Badge_Grade_Dashboard)
-[![Build Status](https://travis-ci.com/StefanoLusardi/clip.svg?branch=master)](https://travis-ci.com/StefanoLusardi/clip)
+[![Build Status](https://stefanolusardi.visualstudio.com/clip/_apis/build/status/StefanoLusardi.clip?branchName=master)](https://stefanolusardi.visualstudio.com/clip/_build/latest?definitionId=13&branchName=master)
 [![License: Unlicense](https://img.shields.io/badge/license-Unlicense-blue.svg)](http://unlicense.org/)
 
 An extremely simple to use, yet fully fledged, C++ Command Line Parser library (compiled and single-header-only).

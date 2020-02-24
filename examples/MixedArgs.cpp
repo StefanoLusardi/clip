@@ -27,5 +27,8 @@ int main(int argc, char** argv, char** env)
 	clip::utils::dumpPositionalArgument(clp, posC);
 	clip::utils::dumpPositionalArgument(clp, posD);
 
+	std::cout << optA.description();
+	std::cout << optB.description();
+
 	return 0;
 }

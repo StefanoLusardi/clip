@@ -10,6 +10,7 @@ https://img.shields.io/github/languages/count/badges/shields.svg
 
 ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/stefanolusardi/clip)
 
+![GitHub repo size](https://img.shields.io/github/repo-size/stefanolusardi/clip)
 
 An extremely simple to use, yet fully fledged, C++ Command Line Parser library (compiled and single-header-only).
 

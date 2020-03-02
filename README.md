@@ -4,8 +4,6 @@
 [![Build Status](https://stefanolusardi.visualstudio.com/clip/_apis/build/status/StefanoLusardi.clip?branchName=master)](https://stefanolusardi.visualstudio.com/clip/_build/latest?definitionId=13&branchName=master)
 [![License: Unlicense](https://img.shields.io/badge/license-Unlicense-blue.svg)](http://unlicense.org/)
 [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/dwyl/esta/issues)
-https://img.shields.io/github/languages/top/badges/shields.svg
-https://img.shields.io/github/languages/count/badges/shields.svg
 [![HitCount](http://hits.dwyl.com/stefanolusardi/clip.svg)](http://hits.dwyl.com/stefanolusardi/clip)
 
 ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/stefanolusardi/clip)

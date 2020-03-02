@@ -13,6 +13,12 @@ https://img.shields.io/github/languages/count/badges/shields.svg
 ![GitHub top language](https://img.shields.io/github/languages/top/stefanolusardi/clip)
 ![GitHub language count](https://img.shields.io/github/languages/count/stefanolusardi/clip)
 
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/stefanolusardi/clip)
+![GitHub Release Date](https://img.shields.io/github/release-date/stefanolusardi/clip)
+![GitHub last commit](https://img.shields.io/github/last-commit/stefanolusardi/clip)
+
+
+
 
 
 An extremely simple to use, yet fully fledged, C++ Command Line Parser library (compiled and single-header-only).

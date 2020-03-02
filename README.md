@@ -6,7 +6,7 @@
 [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/dwyl/esta/issues)
 https://img.shields.io/github/languages/top/badges/shields.svg
 https://img.shields.io/github/languages/count/badges/shields.svg
-[![HitCount](http://hits.dwyl.com/{username}/{project-name}.svg)](http://hits.dwyl.com/{username}/{project-name})
+[![HitCount](http://hits.dwyl.com/stefanolusardi/clip.svg)](http://hits.dwyl.com/stefanolusardi/clip)
 
 
 

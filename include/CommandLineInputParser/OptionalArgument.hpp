@@ -17,7 +17,7 @@ namespace clip
 
 		explicit OptionalArgument(const std::vector<std::string>& names)
 			: _names{ names }
-			, _argValue{ std::nullopt } { }
+			, _argValue{ std::nullopt } { checkNames(names); }
 
 		explicit OptionalArgument(const std::vector<std::string>& names, const std::string& description)
 			: _names{ names }
@@ -54,6 +54,12 @@ namespace clip
 				return {};
 
 			return _argValue.value().defaultValue();
+		}
+
+	protected:
+		constexpr void checkNames(const std::vector<std::string>& names) const
+		{
+			static_assert(names.size() > 0, "OptionalArgument must have at least one valid name"); 
 		}
 	
 	private:

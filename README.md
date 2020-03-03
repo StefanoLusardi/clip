@@ -9,6 +9,7 @@
 ![GitHub language count](https://img.shields.io/github/languages/count/stefanolusardi/clip)
 ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/stefanolusardi/clip)
 ![GitHub repo size](https://img.shields.io/github/repo-size/stefanolusardi/clip)
+![GitHub](https://img.shields.io/github/license/stefanolusardi/clip)
 
 ![GitHub last commit](https://img.shields.io/github/last-commit/stefanolusardi/clip)
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/stefanolusardi/clip)

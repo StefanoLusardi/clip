@@ -1,19 +1,20 @@
 # clip
+Linux: [![Build Status](https://stefanolusardi.visualstudio.com/clip/_apis/build/status/StefanoLusardi.clip?branchName=master&jobName=Linux1804_GCC9)](https://stefanolusardi.visualstudio.com/clip/_build/latest?definitionId=13&branchName=master)
+Windows: [![Build Status](https://stefanolusardi.visualstudio.com/clip/_apis/build/status/StefanoLusardi.clip?branchName=master&jobName=Windows10_MSVC2019)](https://stefanolusardi.visualstudio.com/clip/_build/latest?definitionId=13&branchName=master)
 
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/c67464255ca74d61a2018f5abec9b764)](https://app.codacy.com/manual/StefanoLusardi/clip?utm_source=github.com&utm_medium=referral&utm_content=StefanoLusardi/clip&utm_campaign=Badge_Grade_Dashboard)
-[![Build Status](https://stefanolusardi.visualstudio.com/clip/_apis/build/status/StefanoLusardi.clip?branchName=master)](https://stefanolusardi.visualstudio.com/clip/_build/latest?definitionId=13&branchName=master)
-[![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/dwyl/esta/issues)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/c67464255ca74d61a2018f5abec9b764)](https://app.codacy.com/manual/StefanoLusardi/clip?utm_source=github.com&utm_medium=referral&utm_content=StefanoLusardi/clip&utm_campaign=Badge_Grade_Dashboard) 
+[![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/dwyl/esta/issues) 
+![GitHub](https://img.shields.io/github/license/stefanolusardi/clip) 
 [![HitCount](http://hits.dwyl.com/stefanolusardi/clip.svg)](http://hits.dwyl.com/stefanolusardi/clip)
 
-![GitHub top language](https://img.shields.io/github/languages/top/stefanolusardi/clip)
-![GitHub language count](https://img.shields.io/github/languages/count/stefanolusardi/clip)
-![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/stefanolusardi/clip)
+![GitHub top language](https://img.shields.io/github/languages/top/stefanolusardi/clip) 
+![GitHub language count](https://img.shields.io/github/languages/count/stefanolusardi/clip) 
+![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/stefanolusardi/clip) 
 ![GitHub repo size](https://img.shields.io/github/repo-size/stefanolusardi/clip)
-![GitHub](https://img.shields.io/github/license/stefanolusardi/clip)
 
-![GitHub last commit](https://img.shields.io/github/last-commit/stefanolusardi/clip)
-![GitHub release (latest by date)](https://img.shields.io/github/v/release/stefanolusardi/clip)
-![GitHub Release Date](https://img.shields.io/github/release-date/stefanolusardi/clip)
+![GitHub last commit](https://img.shields.io/github/last-commit/stefanolusardi/clip) 
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/stefanolusardi/clip) 
+![GitHub Release Date](https://img.shields.io/github/release-date/stefanolusardi/clip) 
 
 An extremely simple to use, yet fully fledged, C++ Command Line Parser library (compiled and single-header-only).
 

@@ -59,7 +59,7 @@ namespace clip
 	protected:
 		constexpr void checkNames(const std::vector<std::string>& names) const
 		{
-			static_assert(names.size() > 0, "OptionalArgument must have at least one valid name"); 
+			// static_assert(names.size() > 0, "OptionalArgument must have at least one valid name"); 
 		}
 	
 	private:

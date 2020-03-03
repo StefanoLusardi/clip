@@ -1,6 +1,6 @@
 # clip
-Linux: [![Build Status](https://stefanolusardi.visualstudio.com/clip/_apis/build/status/StefanoLusardi.clip?branchName=master&jobName=Linux1804_GCC9)](https://stefanolusardi.visualstudio.com/clip/_build/latest?definitionId=13&branchName=master)
-Windows: [![Build Status](https://stefanolusardi.visualstudio.com/clip/_apis/build/status/StefanoLusardi.clip?branchName=master&jobName=Windows10_MSVC2019)](https://stefanolusardi.visualstudio.com/clip/_build/latest?definitionId=13&branchName=master)
+**Linux**: [![Build Status](https://stefanolusardi.visualstudio.com/clip/_apis/build/status/StefanoLusardi.clip?branchName=master&jobName=Linux1804_GCC9)](https://stefanolusardi.visualstudio.com/clip/_build/latest?definitionId=13&branchName=master) 
+**Windows**: [![Build Status](https://stefanolusardi.visualstudio.com/clip/_apis/build/status/StefanoLusardi.clip?branchName=master&jobName=Windows10_MSVC2019)](https://stefanolusardi.visualstudio.com/clip/_build/latest?definitionId=13&branchName=master)
 
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/c67464255ca74d61a2018f5abec9b764)](https://app.codacy.com/manual/StefanoLusardi/clip?utm_source=github.com&utm_medium=referral&utm_content=StefanoLusardi/clip&utm_campaign=Badge_Grade_Dashboard) 
 [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/dwyl/esta/issues) 
